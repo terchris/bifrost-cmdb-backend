@@ -1,0 +1,178 @@
+{
+  "kind": "collectionType",
+  "collectionName": "business_applications",
+  "info": {
+    "singularName": "business-application",
+    "pluralName": "business-applications",
+    "displayName": "BusinessApplication",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "string",
+      "required": true
+    },
+    "ArchitectureType": {
+      "type": "enumeration",
+      "enum": [
+        "Web Based",
+        "Platform Application",
+        "Client Server",
+        "Platform Host",
+        "N-Tier",
+        "Other"
+      ]
+    },
+    "InstallType": {
+      "type": "enumeration",
+      "enum": [
+        "Server/Visolit",
+        "Cloud",
+        "SaaS",
+        "On Premise",
+        "Client",
+        "Server/Cloud"
+      ]
+    },
+    "InstallStatus": {
+      "type": "enumeration",
+      "enum": [
+        "Retired",
+        "In Production",
+        "To be Retired"
+      ]
+    },
+    "UserBase": {
+      "type": "string"
+    },
+    "Platform": {
+      "type": "enumeration",
+      "enum": [
+        "SQL Server",
+        "Oracle",
+        "Other"
+      ]
+    },
+    "BusinessOwner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::person.person",
+      "inversedBy": "BusinessOwnerOfApplications"
+    },
+    "ITApplicationOwner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::person.person",
+      "inversedBy": "ITOwnerOfApplications"
+    },
+    "BusinessCriticality": {
+      "type": "enumeration",
+      "enum": [
+        "Low",
+        "Medium",
+        "High"
+      ]
+    },
+    "DataClassification": {
+      "type": "enumeration",
+      "enum": [
+        "Public",
+        "Internal",
+        "Confidential",
+        "Highly Sensitive"
+      ]
+    },
+    "ActiveUserCount": {
+      "type": "integer"
+    },
+    "ApplicationURL": {
+      "type": "string"
+    },
+    "ApplicationCategoryAPM": {
+      "type": "enumeration",
+      "enum": [
+        "Web Content",
+        "Office Productivity",
+        "Financial Services",
+        "Crisis Management",
+        "Asset management",
+        "Education",
+        "IT Service Management",
+        "Storage",
+        "Base system",
+        "Administration",
+        "Customer Relationship Management (CRM)",
+        "Human Resources",
+        "Security",
+        "Business Intelligence",
+        "Others",
+        "Marketing & Sales",
+        "Service Management",
+        "Communication and collaboration"
+      ]
+    },
+    "ApplicationScoringProfileAPM": {
+      "type": "string"
+    },
+    "ApprovalGroup": {
+      "type": "string"
+    },
+    "Created": {
+      "type": "datetime"
+    },
+    "CreatedBy": {
+      "type": "email"
+    },
+    "Number": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "OperationalStatus": {
+      "type": "enumeration",
+      "enum": [
+        "Retired",
+        "Operational",
+        "Non-Operational"
+      ]
+    },
+    "Stakeholders": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::person.person",
+      "mappedBy": "StakeholderForApp"
+    },
+    "Updated": {
+      "type": "datetime"
+    },
+    "Updates": {
+      "type": "integer"
+    },
+    "Vendor": {
+      "type": "string"
+    },
+    "WorkNotes": {
+      "type": "blocks"
+    },
+    "business_applications_relation1": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::business-applications-relation.business-applications-relation",
+      "inversedBy": "system1"
+    },
+    "business_applications_relation2": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::business-applications-relation.business-applications-relation",
+      "inversedBy": "system2"
+    }
+  }
+}

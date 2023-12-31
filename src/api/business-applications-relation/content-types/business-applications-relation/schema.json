@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "business_applications_relations",
+  "info": {
+    "singularName": "business-applications-relation",
+    "pluralName": "business-applications-relations",
+    "displayName": "BusinessApplicationsRelation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "RelationDescription": {
+      "type": "string"
+    },
+    "system1": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::business-application.business-application",
+      "mappedBy": "business_applications_relation1"
+    },
+    "system2": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::business-application.business-application",
+      "mappedBy": "business_applications_relation2"
+    }
+  }
+}

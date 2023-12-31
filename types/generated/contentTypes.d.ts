@@ -573,6 +573,50 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 50;
+      }>;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -724,43 +768,208 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
+export interface ApiBusinessApplicationBusinessApplication
+  extends Schema.CollectionType {
+  collectionName: 'business_applications';
   info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
+    singularName: 'business-application';
+    pluralName: 'business-applications';
+    displayName: 'BusinessApplication';
     description: '';
   };
   options: {
     draftAndPublish: false;
   };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
   attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<{
-        min: 1;
-        max: 50;
-      }>;
-    code: Attribute.String & Attribute.Unique;
+    Name: Attribute.String & Attribute.Required;
+    Description: Attribute.String & Attribute.Required;
+    ArchitectureType: Attribute.Enumeration<
+      [
+        'Web Based',
+        'Platform Application',
+        'Client Server',
+        'Platform Host',
+        'N-Tier',
+        'Other'
+      ]
+    >;
+    InstallType: Attribute.Enumeration<
+      [
+        'Server/Visolit',
+        'Cloud',
+        'SaaS',
+        'On Premise',
+        'Client',
+        'Server/Cloud'
+      ]
+    >;
+    InstallStatus: Attribute.Enumeration<
+      ['Retired', 'In Production', 'To be Retired']
+    >;
+    UserBase: Attribute.String;
+    Platform: Attribute.Enumeration<['SQL Server', 'Oracle', 'Other']>;
+    BusinessOwner: Attribute.Relation<
+      'api::business-application.business-application',
+      'manyToOne',
+      'api::person.person'
+    >;
+    ITApplicationOwner: Attribute.Relation<
+      'api::business-application.business-application',
+      'manyToOne',
+      'api::person.person'
+    >;
+    BusinessCriticality: Attribute.Enumeration<['Low', 'Medium', 'High']>;
+    DataClassification: Attribute.Enumeration<
+      ['Public', 'Internal', 'Confidential', 'Highly Sensitive']
+    >;
+    ActiveUserCount: Attribute.Integer;
+    ApplicationURL: Attribute.String;
+    ApplicationCategoryAPM: Attribute.Enumeration<
+      [
+        'Web Content',
+        'Office Productivity',
+        'Financial Services',
+        'Crisis Management',
+        'Asset management',
+        'Education',
+        'IT Service Management',
+        'Storage',
+        'Base system',
+        'Administration',
+        'Customer Relationship Management (CRM)',
+        'Human Resources',
+        'Security',
+        'Business Intelligence',
+        'Others',
+        'Marketing & Sales',
+        'Service Management',
+        'Communication and collaboration'
+      ]
+    >;
+    ApplicationScoringProfileAPM: Attribute.String;
+    ApprovalGroup: Attribute.String;
+    Created: Attribute.DateTime;
+    CreatedBy: Attribute.Email;
+    Number: Attribute.String & Attribute.Required & Attribute.Unique;
+    OperationalStatus: Attribute.Enumeration<
+      ['Retired', 'Operational', 'Non-Operational']
+    >;
+    Stakeholders: Attribute.Relation<
+      'api::business-application.business-application',
+      'manyToMany',
+      'api::person.person'
+    >;
+    Updated: Attribute.DateTime;
+    Updates: Attribute.Integer;
+    Vendor: Attribute.String;
+    WorkNotes: Attribute.Blocks;
+    business_applications_relation1: Attribute.Relation<
+      'api::business-application.business-application',
+      'manyToOne',
+      'api::business-applications-relation.business-applications-relation'
+    >;
+    business_applications_relation2: Attribute.Relation<
+      'api::business-application.business-application',
+      'manyToOne',
+      'api::business-applications-relation.business-applications-relation'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::business-application.business-application',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::business-application.business-application',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBusinessApplicationsRelationBusinessApplicationsRelation
+  extends Schema.CollectionType {
+  collectionName: 'business_applications_relations';
+  info: {
+    singularName: 'business-applications-relation';
+    pluralName: 'business-applications-relations';
+    displayName: 'BusinessApplicationsRelation';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    RelationDescription: Attribute.String;
+    system1: Attribute.Relation<
+      'api::business-applications-relation.business-applications-relation',
+      'oneToMany',
+      'api::business-application.business-application'
+    >;
+    system2: Attribute.Relation<
+      'api::business-applications-relation.business-applications-relation',
+      'oneToMany',
+      'api::business-application.business-application'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::business-applications-relation.business-applications-relation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::business-applications-relation.business-applications-relation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPersonPerson extends Schema.CollectionType {
+  collectionName: 'people';
+  info: {
+    singularName: 'person';
+    pluralName: 'people';
+    displayName: 'Person';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    Name: Attribute.String & Attribute.Required;
+    BusinessOwnerOfApplications: Attribute.Relation<
+      'api::person.person',
+      'oneToMany',
+      'api::business-application.business-application'
+    >;
+    ITOwnerOfApplications: Attribute.Relation<
+      'api::person.person',
+      'oneToMany',
+      'api::business-application.business-application'
+    >;
+    email: Attribute.Email;
+    StakeholderForApp: Attribute.Relation<
+      'api::person.person',
+      'manyToMany',
+      'api::business-application.business-application'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::person.person',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::person.person',
       'oneToOne',
       'admin::user'
     > &
@@ -782,10 +991,13 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
+      'api::business-application.business-application': ApiBusinessApplicationBusinessApplication;
+      'api::business-applications-relation.business-applications-relation': ApiBusinessApplicationsRelationBusinessApplicationsRelation;
+      'api::person.person': ApiPersonPerson;
     }
   }
 }

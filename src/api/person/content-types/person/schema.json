@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "people",
+  "info": {
+    "singularName": "person",
+    "pluralName": "people",
+    "displayName": "Person",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "BusinessOwnerOfApplications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::business-application.business-application",
+      "mappedBy": "BusinessOwner"
+    },
+    "ITOwnerOfApplications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::business-application.business-application",
+      "mappedBy": "ITApplicationOwner"
+    },
+    "email": {
+      "type": "email"
+    },
+    "StakeholderForApp": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::business-application.business-application",
+      "inversedBy": "Stakeholders"
+    }
+  }
+}
