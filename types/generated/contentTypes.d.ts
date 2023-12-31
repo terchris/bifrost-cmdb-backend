@@ -873,6 +873,11 @@ export interface ApiBusinessApplicationBusinessApplication
       'manyToOne',
       'api::business-applications-relation.business-applications-relation'
     >;
+    business_applications_servers: Attribute.Relation<
+      'api::business-application.business-application',
+      'oneToMany',
+      'api::business-applications-server.business-applications-server'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -914,6 +919,11 @@ export interface ApiBusinessApplicationsRelationBusinessApplicationsRelation
       'oneToMany',
       'api::business-application.business-application'
     >;
+    integrations: Attribute.Relation<
+      'api::business-applications-relation.business-applications-relation',
+      'oneToMany',
+      'api::integration.integration'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -924,6 +934,82 @@ export interface ApiBusinessApplicationsRelationBusinessApplicationsRelation
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::business-applications-relation.business-applications-relation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBusinessApplicationsServerBusinessApplicationsServer
+  extends Schema.CollectionType {
+  collectionName: 'business_applications_servers';
+  info: {
+    singularName: 'business-applications-server';
+    pluralName: 'business-applications-servers';
+    displayName: 'BusinessApplicationsServer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    ServerID: Attribute.String & Attribute.Required & Attribute.Unique;
+    Description: Attribute.String;
+    business_application: Attribute.Relation<
+      'api::business-applications-server.business-applications-server',
+      'manyToOne',
+      'api::business-application.business-application'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::business-applications-server.business-applications-server',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::business-applications-server.business-applications-server',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiIntegrationIntegration extends Schema.CollectionType {
+  collectionName: 'integrations';
+  info: {
+    singularName: 'integration';
+    pluralName: 'integrations';
+    displayName: 'Integration';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    Name: Attribute.String & Attribute.Required;
+    Description: Attribute.String;
+    IntegrationID: Attribute.String & Attribute.Required;
+    IntegrationType: Attribute.Enumeration<
+      ['N/A', 'Export', 'Import', 'Export/Import', 'API']
+    >;
+    business_applications_relation: Attribute.Relation<
+      'api::integration.integration',
+      'manyToOne',
+      'api::business-applications-relation.business-applications-relation'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::integration.integration',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::integration.integration',
       'oneToOne',
       'admin::user'
     > &
@@ -997,6 +1083,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::business-application.business-application': ApiBusinessApplicationBusinessApplication;
       'api::business-applications-relation.business-applications-relation': ApiBusinessApplicationsRelationBusinessApplicationsRelation;
+      'api::business-applications-server.business-applications-server': ApiBusinessApplicationsServerBusinessApplicationsServer;
+      'api::integration.integration': ApiIntegrationIntegration;
       'api::person.person': ApiPersonPerson;
     }
   }

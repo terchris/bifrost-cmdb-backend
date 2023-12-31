@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "integrations",
+  "info": {
+    "singularName": "integration",
+    "pluralName": "integrations",
+    "displayName": "Integration"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "string"
+    },
+    "IntegrationID": {
+      "type": "string",
+      "required": true
+    },
+    "IntegrationType": {
+      "type": "enumeration",
+      "enum": [
+        "N/A",
+        "Export",
+        "Import",
+        "Export/Import",
+        "API"
+      ]
+    },
+    "business_applications_relation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::business-applications-relation.business-applications-relation",
+      "inversedBy": "integrations"
+    }
+  }
+}

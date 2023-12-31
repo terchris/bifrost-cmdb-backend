@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "business_applications_servers",
+  "info": {
+    "singularName": "business-applications-server",
+    "pluralName": "business-applications-servers",
+    "displayName": "BusinessApplicationsServer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ServerID": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "Description": {
+      "type": "string"
+    },
+    "business_application": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::business-application.business-application",
+      "inversedBy": "business_applications_servers"
+    }
+  }
+}

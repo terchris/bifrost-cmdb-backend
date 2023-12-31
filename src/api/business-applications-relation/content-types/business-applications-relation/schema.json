@@ -26,6 +26,12 @@
       "relation": "oneToMany",
       "target": "api::business-application.business-application",
       "mappedBy": "business_applications_relation2"
+    },
+    "integrations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::integration.integration",
+      "mappedBy": "business_applications_relation"
     }
   }
 }

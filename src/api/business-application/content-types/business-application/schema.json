@@ -173,6 +173,12 @@
       "relation": "manyToOne",
       "target": "api::business-applications-relation.business-applications-relation",
       "inversedBy": "system2"
+    },
+    "business_applications_servers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::business-applications-server.business-applications-server",
+      "mappedBy": "business_application"
     }
   }
 }
